@@ -53,6 +53,7 @@ spring:
     basename: i18n/messages
   profiles:
     active: druid
+    include: local
   # 文件上传
   servlet:
     multipart:
