@@ -149,6 +149,13 @@
             <!-- 定时任务-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-farmer</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 定时任务-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-quartz</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
@@ -191,6 +198,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-farmer</module>
     </modules>
     <packaging>pom</packaging>
 

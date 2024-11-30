@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.farmer.mapper.FarmerAuthenticationMapper">
+
+    <resultMap type="FarmerAuthentication" id="FarmerAuthenticationResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="realName"    column="real_name"    />
+        <result property="idCardNumber"    column="id_card_number"    />
+        <result property="idCardImageFront"    column="id_card_image_front"    />
+        <result property="idCardImageBack"    column="id_card_image_back"    />
+        <result property="farmName"    column="farm_name"    />
+        <result property="farmLicense"    column="farm_license"    />
+        <result property="authStatus"    column="auth_status"    />
+        <result property="rejectionReason"    column="rejection_reason"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectFarmerAuthenticationVo">
+        select id, user_id, real_name, id_card_number, id_card_image_front, id_card_image_back, farm_name, farm_license, auth_status, rejection_reason, create_by, create_time, update_by, update_time, remark from farmer_authentication
+    </sql>
+
+    <select id="selectFarmerAuthenticationList" parameterType="FarmerAuthentication" resultMap="FarmerAuthenticationResult">
+        <include refid="selectFarmerAuthenticationVo"/>
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="realName != null  and realName != ''"> and real_name like concat('%', #{realName}, '%')</if>
+            <if test="idCardNumber != null  and idCardNumber != ''"> and id_card_number = #{idCardNumber}</if>
+            <if test="idCardImageFront != null  and idCardImageFront != ''"> and id_card_image_front = #{idCardImageFront}</if>
+            <if test="idCardImageBack != null  and idCardImageBack != ''"> and id_card_image_back = #{idCardImageBack}</if>
+            <if test="farmName != null  and farmName != ''"> and farm_name like concat('%', #{farmName}, '%')</if>
+            <if test="farmLicense != null  and farmLicense != ''"> and farm_license = #{farmLicense}</if>
+            <if test="authStatus != null  and authStatus != ''"> and auth_status = #{authStatus}</if>
+            <if test="rejectionReason != null  and rejectionReason != ''"> and rejection_reason = #{rejectionReason}</if>
+        </where>
+    </select>
+
+    <select id="selectFarmerAuthenticationById" parameterType="Long" resultMap="FarmerAuthenticationResult">
+        <include refid="selectFarmerAuthenticationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFarmerAuthentication" parameterType="FarmerAuthentication">
+        insert into farmer_authentication
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="realName != null and realName != ''">real_name,</if>
+            <if test="idCardNumber != null and idCardNumber != ''">id_card_number,</if>
+            <if test="idCardImageFront != null and idCardImageFront != ''">id_card_image_front,</if>
+            <if test="idCardImageBack != null and idCardImageBack != ''">id_card_image_back,</if>
+            <if test="farmName != null and farmName != ''">farm_name,</if>
+            <if test="farmLicense != null and farmLicense != ''">farm_license,</if>
+            <if test="authStatus != null and authStatus != ''">auth_status,</if>
+            <if test="rejectionReason != null">rejection_reason,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="realName != null and realName != ''">#{realName},</if>
+            <if test="idCardNumber != null and idCardNumber != ''">#{idCardNumber},</if>
+            <if test="idCardImageFront != null and idCardImageFront != ''">#{idCardImageFront},</if>
+            <if test="idCardImageBack != null and idCardImageBack != ''">#{idCardImageBack},</if>
+            <if test="farmName != null and farmName != ''">#{farmName},</if>
+            <if test="farmLicense != null and farmLicense != ''">#{farmLicense},</if>
+            <if test="authStatus != null and authStatus != ''">#{authStatus},</if>
+            <if test="rejectionReason != null">#{rejectionReason},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateFarmerAuthentication" parameterType="FarmerAuthentication">
+        update farmer_authentication
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="realName != null and realName != ''">real_name = #{realName},</if>
+            <if test="idCardNumber != null and idCardNumber != ''">id_card_number = #{idCardNumber},</if>
+            <if test="idCardImageFront != null and idCardImageFront != ''">id_card_image_front = #{idCardImageFront},</if>
+            <if test="idCardImageBack != null and idCardImageBack != ''">id_card_image_back = #{idCardImageBack},</if>
+            <if test="farmName != null and farmName != ''">farm_name = #{farmName},</if>
+            <if test="farmLicense != null and farmLicense != ''">farm_license = #{farmLicense},</if>
+            <if test="authStatus != null and authStatus != ''">auth_status = #{authStatus},</if>
+            <if test="rejectionReason != null">rejection_reason = #{rejectionReason},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFarmerAuthenticationById" parameterType="Long">
+        delete from farmer_authentication where id = #{id}
+    </delete>
+
+    <delete id="deleteFarmerAuthenticationByIds" parameterType="String">
+        delete from farmer_authentication where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
