@@ -2,6 +2,10 @@ package com.ruoyi.web.controller.farmer;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.domain.R;
+import com.ruoyi.farmer.dto.req.AuditReq;
+import com.ruoyi.farmer.dto.req.FarmerAuthReq;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,7 +79,7 @@ public class FarmerAuthenticationController extends BaseController
     @PreAuthorize("@ss.hasPermi('farmer:auth:add')")
     @Log(title = "农商用户认证", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody FarmerAuthentication farmerAuthentication)
+    public AjaxResult add(@RequestBody FarmerAuthReq farmerAuthentication)
     {
         return toAjax(farmerAuthenticationService.insertFarmerAuthentication(farmerAuthentication));
     }
@@ -100,5 +104,28 @@ public class FarmerAuthenticationController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(farmerAuthenticationService.deleteFarmerAuthenticationByIds(ids));
+    }
+
+    /**
+     * 更改审核状态
+     * @param auditReq
+     * @return
+     */
+    @PostMapping("/audit")
+    @PreAuthorize("@ss.hasPermi('farmer:auth:list')")
+    @Log(title = "农商用户认证审核", businessType = BusinessType.UPDATE)
+    public AjaxResult updateStatus(@RequestBody AuditReq auditReq){
+        farmerAuthenticationService.updateStatus(auditReq);
+        return success();
+    }
+
+    /**
+     * 判断当前人审核状态
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('farmer:auth:reportInfo')")
+    @GetMapping("/isAwaitAuth")
+    public R<String> isAwaitAuth(){
+    	return R.ok(farmerAuthenticationService.isAwaitAuth());
     }
 }

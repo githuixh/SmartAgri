@@ -58,4 +58,5 @@ public interface FarmerAuthenticationMapper
      * @return 结果
      */
     public int deleteFarmerAuthenticationByIds(Long[] ids);
+
 }

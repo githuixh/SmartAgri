@@ -2,6 +2,8 @@ package com.ruoyi.farmer.service;
 
 import java.util.List;
 import com.ruoyi.farmer.domain.FarmerAuthentication;
+import com.ruoyi.farmer.dto.req.AuditReq;
+import com.ruoyi.farmer.dto.req.FarmerAuthReq;
 
 /**
  * 农商用户认证Service接口
@@ -33,7 +35,7 @@ public interface IFarmerAuthenticationService
      * @param farmerAuthentication 农商用户认证
      * @return 结果
      */
-    public int insertFarmerAuthentication(FarmerAuthentication farmerAuthentication);
+    public int insertFarmerAuthentication(FarmerAuthReq farmerAuthentication);
 
     /**
      * 修改农商用户认证
@@ -58,4 +60,13 @@ public interface IFarmerAuthenticationService
      * @return 结果
      */
     public int deleteFarmerAuthenticationById(Long id);
+
+    /**
+     * 更改当前审核状态
+     *
+     * @param auditReq
+     */
+    public void updateStatus(AuditReq auditReq);
+
+    public String isAwaitAuth();
 }

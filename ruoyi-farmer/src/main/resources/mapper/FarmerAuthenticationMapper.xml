@@ -8,11 +8,19 @@
         <result property="id"    column="id"    />
         <result property="userId"    column="user_id"    />
         <result property="realName"    column="real_name"    />
+        <result property="phone"    column="phone"    />
         <result property="idCardNumber"    column="id_card_number"    />
         <result property="idCardImageFront"    column="id_card_image_front"    />
         <result property="idCardImageBack"    column="id_card_image_back"    />
         <result property="farmName"    column="farm_name"    />
+        <result property="farmArea"    column="farm_area"    />
         <result property="farmLicense"    column="farm_license"    />
+        <result property="farmingYears"    column="farming_years"    />
+        <result property="farmRegion"    column="farm_region"    />
+        <result property="farmAddress"    column="farm_address"    />
+        <result property="mainCrops"    column="main_crops"    />
+        <result property="farmPhotos"    column="farm_photos"    />
+        <result property="otherDocs"    column="other_docs"    />
         <result property="authStatus"    column="auth_status"    />
         <result property="rejectionReason"    column="rejection_reason"    />
         <result property="createBy"    column="create_by"    />
@@ -23,7 +31,7 @@
     </resultMap>
 
     <sql id="selectFarmerAuthenticationVo">
-        select id, user_id, real_name, id_card_number, id_card_image_front, id_card_image_back, farm_name, farm_license, auth_status, rejection_reason, create_by, create_time, update_by, update_time, remark from farmer_authentication
+        select id, user_id, real_name, phone, id_card_number, id_card_image_front, id_card_image_back, farm_name, farm_area, farm_license, farming_years, farm_region, farm_address, main_crops, farm_photos, other_docs, auth_status, rejection_reason, create_by, create_time, update_by, update_time, remark from farmer_authentication
     </sql>
 
     <select id="selectFarmerAuthenticationList" parameterType="FarmerAuthentication" resultMap="FarmerAuthenticationResult">
@@ -31,11 +39,19 @@
         <where>
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="realName != null  and realName != ''"> and real_name like concat('%', #{realName}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
             <if test="idCardNumber != null  and idCardNumber != ''"> and id_card_number = #{idCardNumber}</if>
             <if test="idCardImageFront != null  and idCardImageFront != ''"> and id_card_image_front = #{idCardImageFront}</if>
             <if test="idCardImageBack != null  and idCardImageBack != ''"> and id_card_image_back = #{idCardImageBack}</if>
             <if test="farmName != null  and farmName != ''"> and farm_name like concat('%', #{farmName}, '%')</if>
+            <if test="farmArea != null "> and farm_area = #{farmArea}</if>
             <if test="farmLicense != null  and farmLicense != ''"> and farm_license = #{farmLicense}</if>
+            <if test="farmingYears != null "> and farming_years = #{farmingYears}</if>
+            <if test="farmRegion != null  and farmRegion != ''"> and farm_region = #{farmRegion}</if>
+            <if test="farmAddress != null  and farmAddress != ''"> and farm_address = #{farmAddress}</if>
+            <if test="mainCrops != null  and mainCrops != ''"> and main_crops = #{mainCrops}</if>
+            <if test="farmPhotos != null  and farmPhotos != ''"> and farm_photos = #{farmPhotos}</if>
+            <if test="otherDocs != null  and otherDocs != ''"> and other_docs = #{otherDocs}</if>
             <if test="authStatus != null  and authStatus != ''"> and auth_status = #{authStatus}</if>
             <if test="rejectionReason != null  and rejectionReason != ''"> and rejection_reason = #{rejectionReason}</if>
         </where>
@@ -46,17 +62,24 @@
         where id = #{id}
     </select>
 
-    <insert id="insertFarmerAuthentication" parameterType="FarmerAuthentication">
+    <insert id="insertFarmerAuthentication" parameterType="FarmerAuthentication" useGeneratedKeys="true" keyProperty="id">
         insert into farmer_authentication
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
             <if test="userId != null">user_id,</if>
             <if test="realName != null and realName != ''">real_name,</if>
+            <if test="phone != null and phone != ''">phone,</if>
             <if test="idCardNumber != null and idCardNumber != ''">id_card_number,</if>
             <if test="idCardImageFront != null and idCardImageFront != ''">id_card_image_front,</if>
             <if test="idCardImageBack != null and idCardImageBack != ''">id_card_image_back,</if>
             <if test="farmName != null and farmName != ''">farm_name,</if>
+            <if test="farmArea != null">farm_area,</if>
             <if test="farmLicense != null and farmLicense != ''">farm_license,</if>
+            <if test="farmingYears != null">farming_years,</if>
+            <if test="farmRegion != null and farmRegion != ''">farm_region,</if>
+            <if test="farmAddress != null and farmAddress != ''">farm_address,</if>
+            <if test="mainCrops != null and mainCrops != ''">main_crops,</if>
+            <if test="farmPhotos != null">farm_photos,</if>
+            <if test="otherDocs != null">other_docs,</if>
             <if test="authStatus != null and authStatus != ''">auth_status,</if>
             <if test="rejectionReason != null">rejection_reason,</if>
             <if test="createBy != null">create_by,</if>
@@ -66,14 +89,21 @@
             <if test="remark != null">remark,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
             <if test="userId != null">#{userId},</if>
             <if test="realName != null and realName != ''">#{realName},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
             <if test="idCardNumber != null and idCardNumber != ''">#{idCardNumber},</if>
             <if test="idCardImageFront != null and idCardImageFront != ''">#{idCardImageFront},</if>
             <if test="idCardImageBack != null and idCardImageBack != ''">#{idCardImageBack},</if>
             <if test="farmName != null and farmName != ''">#{farmName},</if>
+            <if test="farmArea != null">#{farmArea},</if>
             <if test="farmLicense != null and farmLicense != ''">#{farmLicense},</if>
+            <if test="farmingYears != null">#{farmingYears},</if>
+            <if test="farmRegion != null and farmRegion != ''">#{farmRegion},</if>
+            <if test="farmAddress != null and farmAddress != ''">#{farmAddress},</if>
+            <if test="mainCrops != null and mainCrops != ''">#{mainCrops},</if>
+            <if test="farmPhotos != null">#{farmPhotos},</if>
+            <if test="otherDocs != null">#{otherDocs},</if>
             <if test="authStatus != null and authStatus != ''">#{authStatus},</if>
             <if test="rejectionReason != null">#{rejectionReason},</if>
             <if test="createBy != null">#{createBy},</if>
@@ -89,11 +119,19 @@
         <trim prefix="SET" suffixOverrides=",">
             <if test="userId != null">user_id = #{userId},</if>
             <if test="realName != null and realName != ''">real_name = #{realName},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
             <if test="idCardNumber != null and idCardNumber != ''">id_card_number = #{idCardNumber},</if>
             <if test="idCardImageFront != null and idCardImageFront != ''">id_card_image_front = #{idCardImageFront},</if>
             <if test="idCardImageBack != null and idCardImageBack != ''">id_card_image_back = #{idCardImageBack},</if>
             <if test="farmName != null and farmName != ''">farm_name = #{farmName},</if>
+            <if test="farmArea != null">farm_area = #{farmArea},</if>
             <if test="farmLicense != null and farmLicense != ''">farm_license = #{farmLicense},</if>
+            <if test="farmingYears != null">farming_years = #{farmingYears},</if>
+            <if test="farmRegion != null and farmRegion != ''">farm_region = #{farmRegion},</if>
+            <if test="farmAddress != null and farmAddress != ''">farm_address = #{farmAddress},</if>
+            <if test="mainCrops != null and mainCrops != ''">main_crops = #{mainCrops},</if>
+            <if test="farmPhotos != null">farm_photos = #{farmPhotos},</if>
+            <if test="otherDocs != null">other_docs = #{otherDocs},</if>
             <if test="authStatus != null and authStatus != ''">auth_status = #{authStatus},</if>
             <if test="rejectionReason != null">rejection_reason = #{rejectionReason},</if>
             <if test="createBy != null">create_by = #{createBy},</if>

@@ -1,9 +1,16 @@
 package com.ruoyi.farmer.service.impl;
 
 import java.util.List;
+import java.util.Objects;
+
+import com.alibaba.druid.support.json.JSONUtils;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.farmer.constant.FarmerAuthStatus;
+import com.ruoyi.farmer.dto.req.AuditReq;
+import com.ruoyi.farmer.dto.req.FarmerAuthReq;
+import com.ruoyi.farmer.mapper.FarmerAuthenticationMapperExt;
 import org.springframework.stereotype.Service;
 import com.ruoyi.farmer.mapper.FarmerAuthenticationMapper;
 import com.ruoyi.farmer.domain.FarmerAuthentication;
@@ -22,6 +29,9 @@ public class FarmerAuthenticationServiceImpl implements IFarmerAuthenticationSer
 {
     @Resource
     private FarmerAuthenticationMapper farmerAuthenticationMapper;
+
+    @Resource
+    private FarmerAuthenticationMapperExt farmerAuthenticationMapperExt;
 
     /**
      * 查询农商用户认证
@@ -54,13 +64,27 @@ public class FarmerAuthenticationServiceImpl implements IFarmerAuthenticationSer
      * @return 结果
      */
     @Override
-    public int insertFarmerAuthentication(FarmerAuthentication farmerAuthentication)
+    public int insertFarmerAuthentication(FarmerAuthReq farmerAuthentication)
     {
-        farmerAuthentication.setCreateTime(DateUtils.getNowDate());
-        Long userId = SecurityUtils.getUserId();
-        farmerAuthentication.setUserId(userId);
-        farmerAuthentication.setAuthStatus(FarmerAuthStatus.PENDING);
-        return farmerAuthenticationMapper.insertFarmerAuthentication(farmerAuthentication);
+        FarmerAuthentication authentication = new FarmerAuthentication();
+        BeanUtils.copyBeanProp(authentication, farmerAuthentication);
+        authentication.setCreateTime(DateUtils.getNowDate());
+        authentication.setUserId(SecurityUtils.getUserId());
+        // 将地址转为 字符串
+        String farmRegionJsonStr = JSONUtils.toJSONString(farmerAuthentication.getFarmRegion());
+        authentication.setFarmRegion(farmRegionJsonStr);
+        authentication.setAuthStatus(FarmerAuthStatus.PENDING);
+        // 将环境照片文件转为 json 字符串
+        String farmPhotosJsonStr = JSONUtils.toJSONString(farmerAuthentication.getFarmPhotos());
+        authentication.setFarmPhotos(farmPhotosJsonStr);
+        // 主要作物 转为 json
+        String mainCropsJsonStr = JSONUtils.toJSONString(farmerAuthentication.getMainCrops());
+        authentication.setMainCrops(mainCropsJsonStr);
+        // 其他文件 转为 json
+        String otherDocsJsonStr = JSONUtils.toJSONString(farmerAuthentication.getOtherDocs());
+        authentication.setOtherDocs(otherDocsJsonStr);
+
+        return farmerAuthenticationMapper.insertFarmerAuthentication(authentication);
     }
 
     /**
@@ -98,5 +122,33 @@ public class FarmerAuthenticationServiceImpl implements IFarmerAuthenticationSer
     public int deleteFarmerAuthenticationById(Long id)
     {
         return farmerAuthenticationMapper.deleteFarmerAuthenticationById(id);
+    }
+
+    /**
+     * 更改当前审核状态
+     *
+     * @param auditReq
+     */
+    @Override
+    public void updateStatus(AuditReq auditReq) {
+        Long auditReqId = auditReq.getId();
+        FarmerAuthentication farmerAuthentication = farmerAuthenticationMapper.selectFarmerAuthenticationById(auditReqId);
+        farmerAuthentication.setAuthStatus(auditReq.getAuditStatus());
+        if (! "".equals(auditReq.getAuditReason())) {
+            farmerAuthentication.setRejectionReason(auditReq.getAuditReason());
+        }
+
+        farmerAuthenticationMapper.updateFarmerAuthentication(farmerAuthentication);
+    }
+
+    @Override
+    public String isAwaitAuth() {
+        // 获取当前 登录用户 id
+        Long userId = SecurityUtils.getUserId();
+        FarmerAuthentication farmerAuthentication = farmerAuthenticationMapperExt.selectFarmerAuthenticationByUserId(userId);
+        if (Objects.isNull(farmerAuthentication)) {
+            return FarmerAuthStatus.NOT_APPLY;
+        }
+        return farmerAuthentication.getAuthStatus();
     }
 }

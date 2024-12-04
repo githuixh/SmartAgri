@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.farmer.mapper.FarmerAuthenticationMapperExt">
+
+    <resultMap type="FarmerAuthentication" id="FarmerAuthenticationResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="realName"    column="real_name"    />
+        <result property="phone"    column="phone"    />
+        <result property="idCardNumber"    column="id_card_number"    />
+        <result property="idCardImageFront"    column="id_card_image_front"    />
+        <result property="idCardImageBack"    column="id_card_image_back"    />
+        <result property="farmName"    column="farm_name"    />
+        <result property="farmArea"    column="farm_area"    />
+        <result property="farmLicense"    column="farm_license"    />
+        <result property="farmingYears"    column="farming_years"    />
+        <result property="farmRegion"    column="farm_region"    />
+        <result property="farmAddress"    column="farm_address"    />
+        <result property="mainCrops"    column="main_crops"    />
+        <result property="farmPhotos"    column="farm_photos"    />
+        <result property="otherDocs"    column="other_docs"    />
+        <result property="authStatus"    column="auth_status"    />
+        <result property="rejectionReason"    column="rejection_reason"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectFarmerAuthenticationVo">
+        select id, user_id, real_name, phone, id_card_number, id_card_image_front, id_card_image_back, farm_name, farm_area, farm_license, farming_years, farm_region, farm_address, main_crops, farm_photos, other_docs, auth_status, rejection_reason, create_by, create_time, update_by, update_time, remark from farmer_authentication
+    </sql>
+    <select id="selectFarmerAuthenticationByUserId" resultMap="FarmerAuthenticationResult">
+        <include refid="selectFarmerAuthenticationVo"/>
+        where user_id = #{userId}
+    </select>
+
+
+</mapper>
