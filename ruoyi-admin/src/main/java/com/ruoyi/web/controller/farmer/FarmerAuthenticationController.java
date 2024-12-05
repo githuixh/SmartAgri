@@ -108,8 +108,7 @@ public class FarmerAuthenticationController extends BaseController
 
     /**
      * 更改审核状态
-     * @param auditReq
-     * @return
+     * @param auditReq  auditReq
      */
     @PostMapping("/audit")
     @PreAuthorize("@ss.hasPermi('farmer:auth:list')")
@@ -120,12 +119,11 @@ public class FarmerAuthenticationController extends BaseController
     }
 
     /**
-     * 判断当前人审核状态
-     * @return
+     * 获得当前审核状态
      */
     @PreAuthorize("@ss.hasPermi('farmer:auth:reportInfo')")
-    @GetMapping("/isAwaitAuth")
-    public R<String> isAwaitAuth(){
-    	return R.ok(farmerAuthenticationService.isAwaitAuth());
+    @GetMapping("/getAuthStatus")
+    public AjaxResult isAwaitAuth(){
+        return AjaxResult.success(farmerAuthenticationService.getAuthStatus());
     }
 }

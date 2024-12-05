@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysAreaMapper">
+
+    <resultMap type="SysArea" id="SysAreaResult">
+        <id     property="areaId"      column="area_id"      />
+        <result property="parentId"    column="parent_id"    />
+        <result property="areaName"     column="area_name"     />
+    </resultMap>
+
+    <sql id="selectAreaVo">
+        select area_id, parent_id, area_name
+        from sys_area
+    </sql>
+    <select id="selectAreaList" resultMap="SysAreaResult">
+        <include refid="selectAreaVo"/>
+    </select>
+
+
+</mapper>

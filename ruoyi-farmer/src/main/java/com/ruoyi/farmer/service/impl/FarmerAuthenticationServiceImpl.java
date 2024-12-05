@@ -10,6 +10,7 @@ import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.farmer.constant.FarmerAuthStatus;
 import com.ruoyi.farmer.dto.req.AuditReq;
 import com.ruoyi.farmer.dto.req.FarmerAuthReq;
+import com.ruoyi.farmer.dto.resp.FarmerAuthStatusResp;
 import com.ruoyi.farmer.mapper.FarmerAuthenticationMapperExt;
 import org.springframework.stereotype.Service;
 import com.ruoyi.farmer.mapper.FarmerAuthenticationMapper;
@@ -142,13 +143,18 @@ public class FarmerAuthenticationServiceImpl implements IFarmerAuthenticationSer
     }
 
     @Override
-    public String isAwaitAuth() {
+    public FarmerAuthStatusResp getAuthStatus() {
+        FarmerAuthStatusResp farmerAuthStatusResp = new FarmerAuthStatusResp();
         // 获取当前 登录用户 id
         Long userId = SecurityUtils.getUserId();
         FarmerAuthentication farmerAuthentication = farmerAuthenticationMapperExt.selectFarmerAuthenticationByUserId(userId);
         if (Objects.isNull(farmerAuthentication)) {
-            return FarmerAuthStatus.NOT_APPLY;
+            farmerAuthStatusResp.setAuthStatus(FarmerAuthStatus.NOT_APPLY);
+            return farmerAuthStatusResp;
         }
-        return farmerAuthentication.getAuthStatus();
+        farmerAuthStatusResp.setAuthStatus(farmerAuthentication.getAuthStatus());
+        farmerAuthStatusResp.setCreateTime(DateUtils.parseDateToStr("yyyy-MM-dd HH:mm:ss", farmerAuthentication.getCreateTime()));
+        farmerAuthStatusResp.setRejectionReason(farmerAuthentication.getRejectionReason());
+        return farmerAuthStatusResp;
     }
 }

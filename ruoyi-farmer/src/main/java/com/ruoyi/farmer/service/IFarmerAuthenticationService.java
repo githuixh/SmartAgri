@@ -4,6 +4,7 @@ import java.util.List;
 import com.ruoyi.farmer.domain.FarmerAuthentication;
 import com.ruoyi.farmer.dto.req.AuditReq;
 import com.ruoyi.farmer.dto.req.FarmerAuthReq;
+import com.ruoyi.farmer.dto.resp.FarmerAuthStatusResp;
 
 /**
  * 农商用户认证Service接口
@@ -68,5 +69,5 @@ public interface IFarmerAuthenticationService
      */
     public void updateStatus(AuditReq auditReq);
 
-    public String isAwaitAuth();
+    public FarmerAuthStatusResp getAuthStatus();
 }
