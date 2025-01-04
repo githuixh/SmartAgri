@@ -3,6 +3,8 @@ package com.ruoyi.farmer.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ruoyi.common.exception.farmer.CategoryNodeException;
+import com.ruoyi.common.exception.farmer.CategoryRemoveNodeException;
 import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.farmer.domain.FarmerCategories;
 import com.ruoyi.farmer.mapper.FarmerCategoriesMapper;
@@ -98,6 +100,7 @@ public class FarmerCategoriesServiceImpl implements IFarmerCategoriesService
     @Override
     public int deleteFarmerCategoriesByIds(Long[] ids)
     {
+
         return farmerCategoriesMapper.deleteFarmerCategoriesByIds(ids);
     }
 
@@ -110,6 +113,12 @@ public class FarmerCategoriesServiceImpl implements IFarmerCategoriesService
     @Override
     public int deleteFarmerCategoriesById(Long id)
     {
+
+        Integer childrenCount = farmerCategoriesMapperExt.checkChildren(id);
+        if (childrenCount > 0) {
+            throw new CategoryRemoveNodeException();
+        }
+        // todo 删除的是子节点 要检查是否背外部引用
         return farmerCategoriesMapper.deleteFarmerCategoriesById(id);
     }
 }

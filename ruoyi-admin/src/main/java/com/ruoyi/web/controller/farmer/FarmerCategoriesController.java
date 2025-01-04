@@ -46,7 +46,7 @@ public class FarmerCategoriesController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(FarmerCategories farmerCategories)
     {
-        // startPage();
+
         List<FarmerCategories> list = farmerCategoriesService.selectFarmerCategoriesList(farmerCategories);
         return getDataTable(list);
     }
@@ -108,11 +108,12 @@ public class FarmerCategoriesController extends BaseController
     /**
      * 删除farmer
      */
+    @ApiOperation(value = "删除产品分类")
     @PreAuthorize("@ss.hasPermi('farmer:products:remove')")
     @Log(title = "farmer", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+	@DeleteMapping("/{id}")
+    public AjaxResult remove(@PathVariable Long id)
     {
-        return toAjax(farmerCategoriesService.deleteFarmerCategoriesByIds(ids));
+        return toAjax(farmerCategoriesService.deleteFarmerCategoriesById(id));
     }
 }

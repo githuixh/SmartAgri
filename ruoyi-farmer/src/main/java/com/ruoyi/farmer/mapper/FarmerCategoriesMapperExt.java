@@ -16,4 +16,6 @@ public interface FarmerCategoriesMapperExt
     public List<FarmerCategories> selectFarmerCategoriesListByPid(FarmerCategories farmerCategories);
 
     public List<FarmerCategories> getChildrenNodes(@Param("idList") List<Long> idList);
+
+    public Integer checkChildren(@Param("pid") Long pid);
 }

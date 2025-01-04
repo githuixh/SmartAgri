@@ -37,5 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
         order by order_num
     </select>
+    <select id="checkChildren" resultType="java.lang.Integer">
+        select count(1) as 'num' from farmer_categories where p_id = #{pid}
+    </select>
 
 </mapper>
