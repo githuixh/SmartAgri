@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.farmer.mapper.FarmerCategoriesMapper">
+    <resultMap type="FarmerCategories" id="FarmerCategoriesResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="pId"    column="p_id"    />
+        <result property="status"    column="status"    />
+        <result property="description"    column="description"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectFarmerCategoriesVo">
+        select id, name, p_id, status, description, order_num, create_time, update_time, create_by, update_by, remark from farmer_categories
+    </sql>
+
+    <select id="selectFarmerCategoriesList" parameterType="FarmerCategories" resultMap="FarmerCategoriesResult">
+        <include refid="selectFarmerCategoriesVo"/>
+        <where>
+            <if test="pId != null "> and p_id = #{pId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="orderNum != null "> and order_num = #{orderNum}</if>
+        </where>
+    </select>
+
+    <select id="selectFarmerCategoriesById" parameterType="Long" resultMap="FarmerCategoriesResult">
+        <include refid="selectFarmerCategoriesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFarmerCategories" parameterType="FarmerCategories" useGeneratedKeys="true" keyProperty="id">
+        insert into farmer_categories
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="pId != null">p_id,</if>
+            <if test="status != null">status,</if>
+            <if test="description != null">description,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="pId != null">#{pId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="description != null">#{description},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateFarmerCategories" parameterType="FarmerCategories">
+        update farmer_categories
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="pId != null">p_id = #{pId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFarmerCategoriesById" parameterType="Long">
+        delete from farmer_categories where id = #{id}
+    </delete>
+
+    <delete id="deleteFarmerCategoriesByIds" parameterType="String">
+        delete from farmer_categories where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

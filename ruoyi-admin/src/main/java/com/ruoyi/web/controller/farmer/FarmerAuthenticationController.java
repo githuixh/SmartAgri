@@ -3,9 +3,9 @@ package com.ruoyi.web.controller.farmer;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ruoyi.common.core.domain.R;
 import com.ruoyi.farmer.dto.req.AuditReq;
 import com.ruoyi.farmer.dto.req.FarmerAuthReq;
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2024-11-30
  */
+@Api(tags = "农商用户认证")
 @RestController
 @RequestMapping("/farmer/auth")
 public class FarmerAuthenticationController extends BaseController
