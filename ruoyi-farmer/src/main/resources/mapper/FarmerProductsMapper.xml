@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.farmer.mapper.FarmerProductsMapper">
+
+    <resultMap type="FarmerProducts" id="FarmerProductsResult">
+        <result property="id"    column="id"    />
+        <result property="productsName"    column="products_name"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="description"    column="description"    />
+        <result property="price"    column="price"    />
+        <result property="stock"    column="stock"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectFarmerProductsVo">
+        select id, products_name, category_id, description, price, stock, create_time, update_time, create_by, update_by, remark from farmer_products
+    </sql>
+
+    <select id="selectFarmerProductsList" parameterType="FarmerProducts" resultMap="FarmerProductsResult">
+        <include refid="selectFarmerProductsVo"/>
+        <where>
+            <if test="productsName != null  and productsName != ''"> and products_name like concat('%', #{productsName}, '%')</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="stock != null "> and stock = #{stock}</if>
+        </where>
+    </select>
+
+    <select id="selectFarmerProductsById" parameterType="Long" resultMap="FarmerProductsResult">
+        <include refid="selectFarmerProductsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFarmerProducts" parameterType="FarmerProducts" useGeneratedKeys="true" keyProperty="id">
+        insert into farmer_products
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productsName != null and productsName != ''">products_name,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="description != null">description,</if>
+            <if test="price != null">price,</if>
+            <if test="stock != null">stock,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productsName != null and productsName != ''">#{productsName},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="description != null">#{description},</if>
+            <if test="price != null">#{price},</if>
+            <if test="stock != null">#{stock},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateFarmerProducts" parameterType="FarmerProducts">
+        update farmer_products
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productsName != null and productsName != ''">products_name = #{productsName},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="stock != null">stock = #{stock},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFarmerProductsById" parameterType="Long">
+        delete from farmer_products where id = #{id}
+    </delete>
+
+    <delete id="deleteFarmerProductsByIds" parameterType="String">
+        delete from farmer_products where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
