@@ -39,7 +39,7 @@ public class FarmerCategoriesController extends BaseController
     private IFarmerCategoriesService farmerCategoriesService;
 
     /**
-     * 查询产品分裂列表
+     * 查询产品分类列表
      */
     @ApiOperation(value = "查询产品分类列表")
     @PreAuthorize("@ss.hasPermi('farmer:categories:list')")
@@ -74,8 +74,9 @@ public class FarmerCategoriesController extends BaseController
     }
 
     /**
-     * 获取farmer详细信息
+     * 获取分类详细信息
      */
+    @ApiOperation(value = "获取分类详细信息")
     @PreAuthorize("@ss.hasPermi('farmer:categories:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
@@ -86,6 +87,7 @@ public class FarmerCategoriesController extends BaseController
     /**
      * 新增分类产品
      */
+    @ApiOperation(value = "新增分类产品")
     @PreAuthorize("@ss.hasPermi('farmer:categories:add')")
     @Log(title = "farmer", businessType = BusinessType.INSERT)
     @PostMapping
