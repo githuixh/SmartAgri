@@ -25,14 +25,14 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * farmerController
+ * 农产品分类 Controller
  * 
  * @author ruoyi
  * @date 2025-01-04
  */
 @Api
 @RestController
-@RequestMapping("/farmer/products")
+@RequestMapping("/farmer/categories")
 public class FarmerCategoriesController extends BaseController
 {
     @Resource
@@ -42,7 +42,7 @@ public class FarmerCategoriesController extends BaseController
      * 查询产品分裂列表
      */
     @ApiOperation(value = "查询产品分类列表")
-    @PreAuthorize("@ss.hasPermi('farmer:products:list')")
+    @PreAuthorize("@ss.hasPermi('farmer:categories:list')")
     @GetMapping("/list")
     public TableDataInfo list(FarmerCategories farmerCategories)
     {
@@ -52,7 +52,7 @@ public class FarmerCategoriesController extends BaseController
     }
 
     @ApiOperation(value = "查询产品分页面详情数据")
-    @PreAuthorize("@ss.hasPermi('farmer:products:query')")
+    @PreAuthorize("@ss.hasPermi('farmer:categories:query')")
     @GetMapping("/info")
     public AjaxResult getFarmerCategoriesInfo(){
         // 查询本月新增
@@ -63,7 +63,7 @@ public class FarmerCategoriesController extends BaseController
     /**
      * 导出farmer列表
      */
-    @PreAuthorize("@ss.hasPermi('farmer:products:export')")
+    @PreAuthorize("@ss.hasPermi('farmer:categories:export')")
     @Log(title = "farmer", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FarmerCategories farmerCategories)
@@ -76,7 +76,7 @@ public class FarmerCategoriesController extends BaseController
     /**
      * 获取farmer详细信息
      */
-    @PreAuthorize("@ss.hasPermi('farmer:products:query')")
+    @PreAuthorize("@ss.hasPermi('farmer:categories:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -84,9 +84,9 @@ public class FarmerCategoriesController extends BaseController
     }
 
     /**
-     * 新增farmer
+     * 新增分类产品
      */
-    @PreAuthorize("@ss.hasPermi('farmer:products:add')")
+    @PreAuthorize("@ss.hasPermi('farmer:categories:add')")
     @Log(title = "farmer", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FarmerCategories farmerCategories)
@@ -97,7 +97,7 @@ public class FarmerCategoriesController extends BaseController
     /**
      * 修改farmer
      */
-    @PreAuthorize("@ss.hasPermi('farmer:products:edit')")
+    @PreAuthorize("@ss.hasPermi('farmer:categories:edit')")
     @Log(title = "farmer", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FarmerCategories farmerCategories)
@@ -109,7 +109,7 @@ public class FarmerCategoriesController extends BaseController
      * 删除farmer
      */
     @ApiOperation(value = "删除产品分类")
-    @PreAuthorize("@ss.hasPermi('farmer:products:remove')")
+    @PreAuthorize("@ss.hasPermi('farmer:categories:remove')")
     @Log(title = "farmer", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{id}")
     public AjaxResult remove(@PathVariable Long id)
