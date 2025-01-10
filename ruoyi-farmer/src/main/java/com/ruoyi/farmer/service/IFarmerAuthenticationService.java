@@ -2,7 +2,7 @@ package com.ruoyi.farmer.service;
 
 import java.util.List;
 import com.ruoyi.farmer.domain.FarmerAuthentication;
-import com.ruoyi.farmer.dto.req.AuditReq;
+import com.ruoyi.farmer.dto.req.FarmerAuditReq;
 import com.ruoyi.farmer.dto.req.FarmerAuthReq;
 import com.ruoyi.farmer.dto.resp.FarmerAuthStatusResp;
 
@@ -65,9 +65,9 @@ public interface IFarmerAuthenticationService
     /**
      * 更改当前审核状态
      *
-     * @param auditReq
+     * @param farmerAuditReq
      */
-    public void updateStatus(AuditReq auditReq);
+    public void updateStatus(FarmerAuditReq farmerAuditReq);
 
     public FarmerAuthStatusResp getAuthStatus();
 }

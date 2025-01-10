@@ -7,7 +7,10 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.farmer.domain.FarmerProducts;
+import com.ruoyi.farmer.dto.req.FarmerProductsReq;
 import com.ruoyi.farmer.service.IFarmerProductsService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,7 @@ import java.util.List;
  * @author huixh
  * @date 2025-01-05
  */
+@Api
 @RestController
 @RequestMapping("/farmer/products")
 public class FarmerProductsController extends BaseController {
@@ -29,13 +33,14 @@ public class FarmerProductsController extends BaseController {
     private IFarmerProductsService farmerProductsService;
 
     /**
-     * 查询products列表
+     * 查询商品列表
      */
+    @ApiOperation(value = "商品列表")
     @PreAuthorize("@ss.hasPermi('farmer:products:list')")
     @GetMapping("/list")
     public TableDataInfo list(FarmerProducts farmerProducts)
     {
-        startPage();
+        //startPage();
         List<FarmerProducts> list = farmerProductsService.selectFarmerProductsList(farmerProducts);
         return getDataTable(list);
     }
@@ -64,14 +69,15 @@ public class FarmerProductsController extends BaseController {
     }
 
     /**
-     * 新增products
+     * 新增商品
      */
     @PreAuthorize("@ss.hasPermi('farmer:products:add')")
     @Log(title = "products", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody FarmerProducts farmerProducts)
+    public AjaxResult add(@RequestBody FarmerProductsReq farmerProducts)
     {
-        return toAjax(farmerProductsService.insertFarmerProducts(farmerProducts));
+        farmerProductsService.insertFarmerProductsInfo(farmerProducts);
+        return toAjax(true);
     }
 
     /**

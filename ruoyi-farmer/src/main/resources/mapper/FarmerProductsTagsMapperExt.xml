@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.farmer.mapper.FarmerProductsTagsMapperExt">
+
+    <resultMap type="FarmerProductsTags" id="FarmerProductsTagsResult">
+        <result property="id"    column="id"    />
+        <result property="productsId"    column="products_id"    />
+        <result property="tagsId"    column="tags_id"    />
+    </resultMap>
+
+    <sql id="selectFarmerProductsTagsVo">
+        select id, products_id, tags_id from farmer_products_tags
+    </sql>
+    <insert id="insertProductsTags">
+        insert into farmer_products_tags(products_id, tags_id) values
+        <foreach collection="tagsIds" item="tagId" separator=",">
+            (#{productsId}, #{tagId})
+        </foreach>
+    </insert>
+    <select id="selectProductsTagsListByProductsId" resultMap="FarmerProductsTagsResult">
+        <include refid="selectFarmerProductsTagsVo"/>
+        where products_id = #{productsId}
+    </select>
+    <select id="selectProductsTagsListByTagsIds" resultType="com.ruoyi.farmer.domain.FarmerProductsTags">
+        <include refid="selectFarmerProductsTagsVo"/>
+        where tags_id in
+        <foreach collection="tagsIds" item="tagId" open="(" close=")" separator=",">
+            #{tagId}
+        </foreach>
+    </select>
+    <select id="selectProductsTagsListByProductsIds" resultMap="FarmerProductsTagsResult">
+        <include refid="selectFarmerProductsTagsVo"/>
+        where products_id in
+        <foreach collection="productIds" item="productsId" open="(" close=")" separator=",">
+            #{productsId}
+        </foreach>
+    </select>
+
+</mapper>

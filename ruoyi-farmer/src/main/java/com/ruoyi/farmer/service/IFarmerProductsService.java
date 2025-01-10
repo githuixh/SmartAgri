@@ -1,6 +1,8 @@
 package com.ruoyi.farmer.service;
 
 import com.ruoyi.farmer.domain.FarmerProducts;
+import com.ruoyi.farmer.dto.req.FarmerProductsReq;
+import com.ruoyi.farmer.dto.resp.FarmerProductsResp;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public interface IFarmerProductsService {
      * @param id products主键
      * @return products
      */
-    public FarmerProducts selectFarmerProductsById(Long id);
+    public FarmerProductsResp selectFarmerProductsById(Long id);
 
     /**
      * 查询products列表
@@ -55,4 +57,12 @@ public interface IFarmerProductsService {
      * @return 结果
      */
     public int deleteFarmerProductsById(Long id);
+
+    /**
+     * 插入products 详细信息
+     *
+     * @param farmerProducts 商品对象
+     * @return 结果
+     */
+    void insertFarmerProductsInfo(FarmerProductsReq farmerProducts);
 }

@@ -1,6 +1,7 @@
 package com.ruoyi.farmer.mapper;
 
 import com.ruoyi.farmer.domain.FarmerTags;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -27,6 +28,9 @@ public interface FarmerTagsMapper
      * @return 商品标签集合
      */
     public List<FarmerTags> selectFarmerTagsList(FarmerTags farmerTags);
+
+    public List<FarmerTags> selectFarmerTagsListByIds(@Param("ids") List<Long> ids);
+
 
     /**
      * 新增商品标签

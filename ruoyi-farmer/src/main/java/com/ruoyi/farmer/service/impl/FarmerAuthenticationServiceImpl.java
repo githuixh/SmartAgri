@@ -8,7 +8,7 @@ import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.farmer.constant.FarmerAuthStatus;
-import com.ruoyi.farmer.dto.req.AuditReq;
+import com.ruoyi.farmer.dto.req.FarmerAuditReq;
 import com.ruoyi.farmer.dto.req.FarmerAuthReq;
 import com.ruoyi.farmer.dto.resp.FarmerAuthStatusResp;
 import com.ruoyi.farmer.mapper.FarmerAuthenticationMapperExt;
@@ -128,15 +128,15 @@ public class FarmerAuthenticationServiceImpl implements IFarmerAuthenticationSer
     /**
      * 更改当前审核状态
      *
-     * @param auditReq
+     * @param farmerAuditReq
      */
     @Override
-    public void updateStatus(AuditReq auditReq) {
-        Long auditReqId = auditReq.getId();
+    public void updateStatus(FarmerAuditReq farmerAuditReq) {
+        Long auditReqId = farmerAuditReq.getId();
         FarmerAuthentication farmerAuthentication = farmerAuthenticationMapper.selectFarmerAuthenticationById(auditReqId);
-        farmerAuthentication.setAuthStatus(auditReq.getAuditStatus());
-        if (! "".equals(auditReq.getAuditReason())) {
-            farmerAuthentication.setRejectionReason(auditReq.getAuditReason());
+        farmerAuthentication.setAuthStatus(farmerAuditReq.getAuditStatus());
+        if (! "".equals(farmerAuditReq.getAuditReason())) {
+            farmerAuthentication.setRejectionReason(farmerAuditReq.getAuditReason());
         }
 
         farmerAuthenticationMapper.updateFarmerAuthentication(farmerAuthentication);

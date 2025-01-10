@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.farmer.mapper.FarmerProductsImagesMapper">
+
+    <resultMap type="FarmerProductsImages" id="FarmerProductsImagesResult">
+        <result property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="imageOrder" column="image_order"/>
+        <result property="isPrimary" column="is_primary"/>
+    </resultMap>
+
+    <sql id="selectFarmerProductsImagesVo">
+        select id,product_id,
+               image_url,
+               image_order,
+               is_primary
+        from farmer_products_images
+    </sql>
+    <insert id="insterProductsImages">
+        insert into farmer_products_images(product_id,image_url,image_order,is_primary) values
+        <foreach collection="images" item="image" separator=",">
+            (#{image.productId},#{image.imageUrl},#{image.imageOrder},#{image.isPrimary})
+        </foreach>
+    </insert>
+    <select id="selectProductsImagesByPid" resultMap="FarmerProductsImagesResult">
+        <include refid="selectFarmerProductsImagesVo"/>
+        where product_id=#{id}
+    </select>
+
+
+</mapper>

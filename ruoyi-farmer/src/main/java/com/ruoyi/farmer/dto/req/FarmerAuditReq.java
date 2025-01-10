@@ -4,16 +4,16 @@ package com.ruoyi.farmer.dto.req;
  * 审核请求参数
  * @author huixh
  */
-public class AuditReq {
+public class FarmerAuditReq {
     private Long id;
 
     private String auditStatus;
     private String auditReason;
 
-    public AuditReq() {
+    public FarmerAuditReq() {
     }
 
-    public AuditReq(Long id, String auditStatus, String auditReason) {
+    public FarmerAuditReq(Long id, String auditStatus, String auditReason) {
         this.id = id;
         this.auditStatus = auditStatus;
         this.auditReason = auditReason;

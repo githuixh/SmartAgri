@@ -29,6 +29,13 @@
         <include refid="selectFarmerTagsVo"/>
         where id = #{id}
     </select>
+    <select id="selectFarmerTagsListByIds" resultType="com.ruoyi.farmer.domain.FarmerTags">
+        select id, tag_name, create_time, update_time, create_by, update_by, remark from farmer_tags
+        where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
     <insert id="insertFarmerTags" parameterType="FarmerTags">
         insert into farmer_tags

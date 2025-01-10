@@ -3,7 +3,7 @@ package com.ruoyi.web.controller.farmer;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ruoyi.farmer.dto.req.AuditReq;
+import com.ruoyi.farmer.dto.req.FarmerAuditReq;
 import com.ruoyi.farmer.dto.req.FarmerAuthReq;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -109,13 +109,13 @@ public class FarmerAuthenticationController extends BaseController
 
     /**
      * 更改审核状态
-     * @param auditReq  auditReq
+     * @param farmerAuditReq  auditReq
      */
     @PostMapping("/audit")
     @PreAuthorize("@ss.hasPermi('farmer:auth:list')")
     @Log(title = "农商用户认证审核", businessType = BusinessType.UPDATE)
-    public AjaxResult updateStatus(@RequestBody AuditReq auditReq){
-        farmerAuthenticationService.updateStatus(auditReq);
+    public AjaxResult updateStatus(@RequestBody FarmerAuditReq farmerAuditReq){
+        farmerAuthenticationService.updateStatus(farmerAuditReq);
         return success();
     }
 

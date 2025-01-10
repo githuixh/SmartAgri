@@ -9,8 +9,15 @@
         <result property="productsName"    column="products_name"    />
         <result property="categoryId"    column="category_id"    />
         <result property="description"    column="description"    />
+        <result property="status"    column="status"    />
         <result property="price"    column="price"    />
+        <result property="unit"    column="unit"    />
         <result property="stock"    column="stock"    />
+        <result property="mainImage"    column="main_image"    />
+        <result property="storageCondition"    column="storage_condition"    />
+        <result property="specification"    column="specification"    />
+        <result property="shelfLife"    column="shelf_life"    />
+        <result property="origin"    column="origin"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="createBy"    column="create_by"    />
@@ -19,7 +26,7 @@
     </resultMap>
 
     <sql id="selectFarmerProductsVo">
-        select id, products_name, category_id, description, price, stock, create_time, update_time, create_by, update_by, remark from farmer_products
+        select id, products_name, category_id, description, status, price, unit, stock, main_image, storage_condition, specification, shelf_life, origin, create_time, update_time, create_by, update_by, remark from farmer_products
     </sql>
 
     <select id="selectFarmerProductsList" parameterType="FarmerProducts" resultMap="FarmerProductsResult">
@@ -27,8 +34,15 @@
         <where>
             <if test="productsName != null  and productsName != ''"> and products_name like concat('%', #{productsName}, '%')</if>
             <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
             <if test="price != null "> and price = #{price}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
             <if test="stock != null "> and stock = #{stock}</if>
+            <if test="mainImage != null  and mainImage != ''"> and main_image = #{mainImage}</if>
+            <if test="storageCondition != null  and storageCondition != ''"> and storage_condition = #{storageCondition}</if>
+            <if test="specification != null  and specification != ''"> and specification = #{specification}</if>
+            <if test="shelfLife != null "> and shelf_life = #{shelfLife}</if>
+            <if test="origin != null  and origin != ''"> and origin = #{origin}</if>
         </where>
     </select>
 
@@ -43,8 +57,15 @@
             <if test="productsName != null and productsName != ''">products_name,</if>
             <if test="categoryId != null">category_id,</if>
             <if test="description != null">description,</if>
+            <if test="status != null">status,</if>
             <if test="price != null">price,</if>
+            <if test="unit != null">unit,</if>
             <if test="stock != null">stock,</if>
+            <if test="mainImage != null">main_image,</if>
+            <if test="storageCondition != null">storage_condition,</if>
+            <if test="specification != null">specification,</if>
+            <if test="shelfLife != null">shelf_life,</if>
+            <if test="origin != null">origin,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="createBy != null and createBy != ''">create_by,</if>
@@ -55,8 +76,15 @@
             <if test="productsName != null and productsName != ''">#{productsName},</if>
             <if test="categoryId != null">#{categoryId},</if>
             <if test="description != null">#{description},</if>
+            <if test="status != null">#{status},</if>
             <if test="price != null">#{price},</if>
+            <if test="unit != null">#{unit},</if>
             <if test="stock != null">#{stock},</if>
+            <if test="mainImage != null">#{mainImage},</if>
+            <if test="storageCondition != null">#{storageCondition},</if>
+            <if test="specification != null">#{specification},</if>
+            <if test="shelfLife != null">#{shelfLife},</if>
+            <if test="origin != null">#{origin},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
@@ -71,8 +99,15 @@
             <if test="productsName != null and productsName != ''">products_name = #{productsName},</if>
             <if test="categoryId != null">category_id = #{categoryId},</if>
             <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
             <if test="price != null">price = #{price},</if>
+            <if test="unit != null">unit = #{unit},</if>
             <if test="stock != null">stock = #{stock},</if>
+            <if test="mainImage != null">main_image = #{mainImage},</if>
+            <if test="storageCondition != null">storage_condition = #{storageCondition},</if>
+            <if test="specification != null">specification = #{specification},</if>
+            <if test="shelfLife != null">shelf_life = #{shelfLife},</if>
+            <if test="origin != null">origin = #{origin},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
