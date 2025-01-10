@@ -11,6 +11,7 @@ import java.util.List;
 public class FarmerProductsResp {
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     private String productsName;
     private Long categoryId;
     private BigDecimal price;
@@ -158,9 +159,18 @@ public class FarmerProductsResp {
         this.features = features;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "FarmerProductsResp{" +
+                "id=" + id +
                 "productsName='" + productsName + '\'' +
                 ", categoryId=" + categoryId +
                 ", price=" + price +

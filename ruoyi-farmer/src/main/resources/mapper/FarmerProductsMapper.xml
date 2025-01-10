@@ -44,6 +44,7 @@
             <if test="shelfLife != null "> and shelf_life = #{shelfLife}</if>
             <if test="origin != null  and origin != ''"> and origin = #{origin}</if>
         </where>
+        ORDER BY status DESC, id ASC
     </select>
 
     <select id="selectFarmerProductsById" parameterType="Long" resultMap="FarmerProductsResult">

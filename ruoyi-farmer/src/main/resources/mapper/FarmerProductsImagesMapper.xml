@@ -25,6 +25,12 @@
             (#{image.productId},#{image.imageUrl},#{image.imageOrder},#{image.isPrimary})
         </foreach>
     </insert>
+    <delete id="deleteProductsImagesByPid">
+        delete from farmer_products_images where product_id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
     <select id="selectProductsImagesByPid" resultMap="FarmerProductsImagesResult">
         <include refid="selectFarmerProductsImagesVo"/>
         where product_id=#{id}

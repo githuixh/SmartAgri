@@ -3,6 +3,7 @@ package com.ruoyi.farmer.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.ListUtils;
 import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,6 +62,8 @@ public class FarmerProductsServiceImpl implements IFarmerProductsService {
         List<FarmerProductsImages> farmerProductsImages = farmerProductsImagesMapper.selectProductsImagesByPid(products.getId());
         FarmerProductsResp farmerProductsResp = new FarmerProductsResp();
         BeanUtils.copyBeanProp(farmerProductsResp, products);
+        String originStr = products.getOrigin();
+        farmerProductsResp.setOrigin(ListUtils.stringToList(originStr));
         farmerProductsResp.setFeatures(tagsList);
         farmerProductsResp.setImages(farmerProductsImages);
         return farmerProductsResp;
@@ -131,10 +135,21 @@ public class FarmerProductsServiceImpl implements IFarmerProductsService {
      * @return 结果
      */
     @Override
-    public int updateFarmerProducts(FarmerProducts farmerProducts)
+    @Transactional(rollbackFor = Exception.class)
+    public void updateFarmerProducts(FarmerProductsReq farmerProducts)
     {
-        farmerProducts.setUpdateTime(DateUtils.getNowDate());
-        return farmerProductsMapper.updateFarmerProducts(farmerProducts);
+        FarmerProducts products = new FarmerProducts();
+        BeanUtils.copyBeanProp(products, farmerProducts);
+        String originStr = ListUtils.listToString(farmerProducts.getOrigin());
+        products.setOrigin(originStr);
+        products.setUpdateTime(DateUtils.getNowDate());
+        products.setUpdateBy(SecurityUtils.getUsername());
+        farmerProductsMapper.updateFarmerProducts(products);
+        farmerProductsTagsMapperExt.selectProductsTagsListByProductsId(products.getId());
+        farmerProductsTagsMapperExt.insertProductsTags(products.getId(), farmerProducts.getFeatures());
+        farmerProductsImagesMapper.deleteProductsImagesByPid(new Long[]{products.getId()});
+        farmerProductsImagesMapper.insterProductsImages(farmerProducts.getImages());
+
     }
 
     /**
@@ -144,8 +159,13 @@ public class FarmerProductsServiceImpl implements IFarmerProductsService {
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteFarmerProductsByIds(Long[] ids)
     {
+        // 清空关联图片
+        farmerProductsImagesMapper.deleteProductsImagesByPid(ids);
+        // 清楚关联 标签关联信息
+        farmerProductsTagsMapperExt.deleteProductsTagsByPid(ids);
         return farmerProductsMapper.deleteFarmerProductsByIds(ids);
     }
 
@@ -172,6 +192,9 @@ public class FarmerProductsServiceImpl implements IFarmerProductsService {
 
         FarmerProducts products = new FarmerProducts();
         BeanUtils.copyBeanProp(products, farmerProducts);
+        List<Long> origin = farmerProducts.getOrigin();
+        String originStr = ListUtils.listToString(origin);
+        products.setOrigin(originStr);
         products.setCreateTime(DateUtils.getNowDate());
         String username = SecurityUtils.getUsername();
         products.setCreateBy(username);

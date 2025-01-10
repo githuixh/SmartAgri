@@ -13,4 +13,6 @@ public interface FarmerProductsImagesMapper {
     public void insterProductsImages(@Param("images") List<FarmerProductsImages> farmerProductsImages);
 
     public List<FarmerProductsImages> selectProductsImagesByPid(@Param("id") Long id);
+
+    public void deleteProductsImagesByPid(@Param("ids") Long[] ids);
 }

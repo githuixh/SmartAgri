@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.farmer;
 
+import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -86,9 +87,10 @@ public class FarmerProductsController extends BaseController {
     @PreAuthorize("@ss.hasPermi('farmer:products:edit')")
     @Log(title = "products", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody FarmerProducts farmerProducts)
+    public AjaxResult edit(@RequestBody FarmerProductsReq farmerProducts)
     {
-        return toAjax(farmerProductsService.updateFarmerProducts(farmerProducts));
+        farmerProductsService.updateFarmerProducts(farmerProducts);
+        return toAjax(true);
     }
 
     /**

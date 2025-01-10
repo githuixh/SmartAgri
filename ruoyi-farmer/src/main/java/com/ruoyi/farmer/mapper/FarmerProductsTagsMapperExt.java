@@ -19,4 +19,6 @@ public interface FarmerProductsTagsMapperExt {
     public List<FarmerProductsTags> selectProductsTagsListByTagsIds(@Param("tagsIds") List<Long> tagsIds);
 
     public List<FarmerProductsTags> selectProductsTagsListByProductsIds(@Param("productIds") List<Long> productIds);
+
+    public void deleteProductsTagsByPid(@Param("ids") Long[] ids);
 }

@@ -38,9 +38,9 @@ public interface IFarmerProductsService {
      * 修改products
      *
      * @param farmerProducts products
-     * @return 结果
+     *
      */
-    public int updateFarmerProducts(FarmerProducts farmerProducts);
+    public void updateFarmerProducts(FarmerProductsReq farmerProducts);
 
     /**
      * 批量删除products
