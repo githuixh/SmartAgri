@@ -132,7 +132,6 @@ public class FarmerProductsServiceImpl implements IFarmerProductsService {
      * 修改products
      *
      * @param farmerProducts products
-     * @return 结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -146,6 +145,7 @@ public class FarmerProductsServiceImpl implements IFarmerProductsService {
         products.setUpdateBy(SecurityUtils.getUsername());
         farmerProductsMapper.updateFarmerProducts(products);
         farmerProductsTagsMapperExt.selectProductsTagsListByProductsId(products.getId());
+        farmerProductsTagsMapperExt.deleteProductsTagsByPid(new Long[]{products.getId()});
         farmerProductsTagsMapperExt.insertProductsTags(products.getId(), farmerProducts.getFeatures());
         farmerProductsImagesMapper.deleteProductsImagesByPid(new Long[]{products.getId()});
         farmerProductsImagesMapper.insterProductsImages(farmerProducts.getImages());

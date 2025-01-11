@@ -1,5 +1,8 @@
 package com.ruoyi.farmer.dto.resp;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.ruoyi.farmer.domain.FarmerProductsImages;
 
 import java.math.BigDecimal;
@@ -11,8 +14,10 @@ import java.util.List;
 public class FarmerProductsResp {
     private static final long serialVersionUID = 1L;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
     private String productsName;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long categoryId;
     private BigDecimal price;
     private String unit;
